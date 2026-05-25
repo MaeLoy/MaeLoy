@@ -21,7 +21,7 @@ public class Login {
         if(enteredUsername.equals(this.userName) && enteredPassword.equals(this.Password)) {
 
             //return welcome message if login is successful
-            return "Welcome" + firstName + " " + lastName + " " + "It is great to see you";
+            return "Welcome"+" " + firstName + " " + lastName + " " + "It is great to see you";
         }else {
             // return error message if login details are incorrect
             return "Username or Password incorrect. Please try again." ;
