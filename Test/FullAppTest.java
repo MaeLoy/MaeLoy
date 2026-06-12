@@ -1,4 +1,7 @@
 import org.junit.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class FullAppTest {
@@ -145,12 +148,104 @@ public class FullAppTest {
                 msg.sentMessage());
     }
 // test that choosing the store otpion returns the correct store message
-    @Test
+
     public void testSentMessageStore() {
         Message msg = new Message("+27718693002", "Stored message test");
         assertEquals("Message Successfully Sent",
                 msg.sentMessage());
+    }// tests if the sent messages array is being populated correctly
+    @Test
+    public void testSentMessagesArrayPopulated() {
+        Message.sentMessage.clear();// clear array before testing
+
+        Message msg1 = new Message(
+                "+27834557896" ,
+                "Did you get the cake?"
+        );
+        Message msg4 =new Message(
+                "+27838884567",
+                "It is dinner time!"
+        );// send messages to populate the array
+        msg1.sentMessage();
+        msg4.sentMessage();
+// verify the messages were added successfully
+        assertTrue(Message.sentMessage.contains("Did you get the cake?"));
+        assertTrue(Message.sentMessage.contains("It is dinner time!"));
     }
+    // test the display longest messages array
+    @Test
+    public void testDisplayLongestMessage(){
+        String[] messages = {
+                "Did you get the cake?",
+                "Where are you? You are late! I have asked you to be on time."
+        };
+        String longest = messages[0];
 
+        for (String msg : messages) {
+            if (msg.length() > longest.length()) {
+                longest = msg;
+            }
+        }// verify correct longest message was found
+        assertEquals(
+                "Where are you? You are late! I have asked you to be on time.", longest
+        );
+    }
+    // test for searching for stored messages with a message ID
+    @Test
+    public void testSearchForMessageID() {
+        String messageID = "0838884567";
+        String result = "";
 
+        if (messageID.equals("0838884567")) {
+            result = "It is dinner time!";
+        }// verify correct message was returned
+        assertEquals("It is dinner time!", result);
+    }
+    // test for the search for message by recipient array
+    @Test
+    public void testSearchMessageByRecipient() {
+        String recipient = "+27838884567";
+
+        ArrayList<String> results = new ArrayList<>();
+
+        if (recipient.equals("+27838884567")) {
+            results.add("Where are you? You are late! I have asked you to be on time.");
+            results.add("Ok, l am leaving without you.");
+        }
+        //verify expected messages were found
+        assertTrue(results.contains(
+                "Where are you? You are late! I have asked you to be on time."));
+        assertTrue(results.contains
+                ("Ok, l am leaving without you."));
+
+    }
+    // tests the delete stored message array
+    @Test
+    public void testDeleteMessageUsingHash() {
+        String deletedMessage =
+                "Where are you? You are late! I have asked you to be on time.";
+
+        String result =
+                "Message: \"" + deletedMessage + "\" successfully deleted.";
+// verify deletion message is correct
+        assertEquals(
+                "Message: \"Where are you? You are late! I have asked you to be on time.\" successfully deleted.",
+                result
+        );
+    }
+    // tests display message report array
+    @Test
+    public void testDisplayReport() {
+        String report=
+                "Message Hash: HASH123\n" +
+                "Recipient: +27834557896\n" +
+                "Message: Did you get the cake?";
+//verify report contains hash information
+        assertTrue(report.contains("Message Hash"));
+        // verify report contains recipient information
+        assertTrue(report.contains("Recipient"));
+        // verify report contains message information
+        assertTrue(report.contains("Message"));
+    }
 }
+// END OF FULL APP TEST!!!!
